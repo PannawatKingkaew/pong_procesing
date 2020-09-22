@@ -1,0 +1,17 @@
+commit 976f97e8e463daf23ba355b0ce534ce9aa3839f2
+Author: Pannawat Kingkaew <s6201012620163@email.kmutnb.ac.th>
+Date:   Tue Sep 22 14:47:25 2020 +0700
+
+    create board
+
+commit d08b6d754e7f9ec0ff12e6894ccb5fed13a0b39e
+Author: Pannawat Kingkaew <s6201012620163@email.kmutnb.ac.th>
+Date:   Tue Sep 22 14:02:47 2020 +0700
+
+    fix
+
+commit 046e67da649c373affcb4c6f91dbe0d94222ab2e
+Author: Pannawat Kingkaew <s6201012620163@email.kmutnb.ac.th>
+Date:   Tue Sep 22 13:54:34 2020 +0700
+
+    class design

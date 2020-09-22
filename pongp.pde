@@ -1,31 +1,40 @@
-PongPaddle p1 = new PongPaddle();
-PongPaddle p2 = new PongPaddle();
 Ponggame g = new Ponggame();
 Pongball b = new Pongball();
+PongPaddle[] p = new PongPaddle[3];
 void setup()
 {
   size(1000,500);
+  for(int i = 1 ; i < 3; i++)
+  {
+   p[i] = new PongPaddle(); 
+  }
 }
 void draw()
 {
   background(0);
-  p1.paddle(1);
-  p2.paddle(2);
+  for(int i = 1 ; i < 3; i++)
+  {
+   p[i].paddle(i);
+   p[i].paddle_move();
+  }
   g.board();
   b.ball();
+  b.move();
 }
 
 class PongPaddle
 {
+  float y = 0;
+
   void paddle(int player)    //create paddle
   {
     if( player == 1 )
     {
-      rect(0,mouseY,25,150);
+      rect(0,y,25,150);
     }
     else if( player == 2 )
     {
-      rect(974,mouseY,25,150);
+      rect(974,y,25,150);
     }
   }
   
@@ -35,23 +44,39 @@ class PongPaddle
   
   void paddle_move() //paddle movement
   {
+    if(mousePressed)
+    {
+      y = mouseY;
+    }
   }
-  
 }
 
 class Pongball
 {
-  float x;
-  float y;
-  float speed;
+  int r = 50 ;
+  float xb = width/2;
+  float yb = height/2;
+  float speedX = 2.2;
+  float speedY = 2.2;
+  int xdirection = 1;  // Left or Right
+  int ydirection = 1;  // Top to Bottom
   
   void ball() //create ball
   {
-    ellipse(width/2,height/2,50,50);
+    ellipse(xb,yb,r,r);
   }
   
   void move() //ball movement
   {
+    xb = xb + ( speedX * xdirection );
+    yb = yb + ( speedY * ydirection );
+  
+    if (xb > width-25 || xb < r) {
+      xdirection *= -1;
+    }
+    if (yb > height-25 || yb < r) {
+      ydirection *= -1;
+  }
   }
   
 }
