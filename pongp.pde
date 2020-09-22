@@ -1,4 +1,4 @@
-class PongPaddle()  
+class PongPaddle
 {
   
   void paddle()    //create paddle
@@ -15,10 +15,10 @@ class PongPaddle()
   
 }
 
-class Pongball()
+class Pongball
 {
   float x;
-  float y:
+  float y;
   float speed;
   
   void ball() //create ball
@@ -31,7 +31,7 @@ class Pongball()
   
 }
 
-class Ponggame()
+class Ponggame
 {
   
   int player1; //score player 1
