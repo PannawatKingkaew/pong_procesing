@@ -1,5 +1,5 @@
 Ponggame g = new Ponggame();
-Pongball b = new Pongball();
+Ball ball; 
 Paddle paddleL;
 Paddle paddleR;
 
@@ -8,14 +8,15 @@ void setup()
   size(1000,500);
   paddleL = new Paddle(15, height/2, 30,200);
   paddleR = new Paddle(width-15, height/2, 30,200);
+  ball = new Ball(width/2, height/2, 50);
 }
 
 void draw()
 {
   background(0);
   g.board();
-  b.ball();
-  b.move();
+  ball.display(); 
+  ball.move();
   paddleL.move();
   paddleL.display();
   paddleR.move();
@@ -93,34 +94,84 @@ class Paddle
   }
 }
 
-class Pongball
+class Ball 
 {
-  int r = 50 ;
-  float xb = width/2;
-  float yb = height/2;
-  float speedX = 2.2;
-  float speedY = 2.2;
-  int xdirection = 1;  // Left or Right
-  int ydirection = 1;  // Top to Bottom
+  float x;
+  float y;
+  float speedX = 3 ;
+  float speedY = 3 ;
+  float size;
+  int i = 0;
   
-  void ball() //create ball
+  Ball(float posX, float posY, float ballsize) 
   {
-    ellipse(xb,yb,r,r);
+    x = posX;
+    y = posY;
+    size = ballsize;
   }
-  
-  void move() //ball movement
+  void move() 
   {
-    xb = xb + ( speedX * xdirection );
-    yb = yb + ( speedY * ydirection );
-  
-    if (xb > width-25 || xb < r) {
-      xdirection *= -1;
+    y = y + speedY;
+    x = x + speedX;
+    
+
+    if (y + size/2 > height) 
+    {
+      ball.speedY = -ball.speedY;
     }
-    if (yb > height-25 || yb < r) {
-      ydirection *= -1;
-  }
+
+    if (y - size/2 < 0)
+    {
+      ball.speedY = -ball.speedY;
+    }
+    
+    if(i < 9)
+    {
+     if ( ball.left() < paddleL.right() && ball.y >= paddleL.top() && ball.y <= paddleL.bottom())
+     {
+      ball.speedX = -ball.speedX*(1.2);
+      i+=1;
+     }
+     if ( ball.right() > paddleR.left() && ball.y >= paddleR.top() && ball.y <= paddleR.bottom()) 
+     {
+      ball.speedX = -ball.speedX*(1.2);
+      i+=1;
+     }
+    }
+    else
+    {
+     if ( ball.left() < paddleL.right() && ball.y >= paddleL.top() && ball.y <= paddleL.bottom())
+     {
+      ball.speedX = -ball.speedX;
+     }
+     if ( ball.right() > paddleR.left() && ball.y >= paddleR.top() && ball.y <= paddleR.bottom()) 
+     {
+      ball.speedX = -ball.speedX;
+     }      
+    }
   }
   
+  void display() 
+  {
+    ellipse(x,y,size,size); 
+  }
+
+  float left()
+  {
+    return x - size/2;
+  }
+  float right()
+  {
+    return x + size/2;
+  }
+  float top()
+  {
+    return y - size/2;
+  }
+  float bottom()
+  {
+    return y + size/2;
+  }
 }
 
 class Ponggame
