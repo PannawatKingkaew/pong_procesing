@@ -1,53 +1,95 @@
 Ponggame g = new Ponggame();
 Pongball b = new Pongball();
-PongPaddle[] p = new PongPaddle[3];
+Paddle paddleL;
+Paddle paddleR;
+
 void setup()
 {
   size(1000,500);
-  for(int i = 1 ; i < 3; i++)
-  {
-   p[i] = new PongPaddle(); 
-  }
+  paddleL = new Paddle(15, height/2, 30,200);
+  paddleR = new Paddle(width-15, height/2, 30,200);
 }
+
 void draw()
 {
   background(0);
-  for(int i = 1 ; i < 3; i++)
-  {
-   p[i].paddle(i);
-   p[i].paddle_move();
-  }
   g.board();
   b.ball();
   b.move();
+  paddleL.move();
+  paddleL.display();
+  paddleR.move();
+  paddleR.display();
 }
 
-class PongPaddle
+void mouseDragged()
 {
-  float y = 0;
+  if(mouseX <= width/2)
+  {
+    paddleL.y = mouseY;
+  }
+  else if(mouseX >= width/2)
+  {
+    paddleR.y = mouseY;
+  }
+}
 
-  void paddle(int player)    //create paddle
-  {
-    if( player == 1 )
-    {
-      rect(0,y,25,150);
-    }
-    else if( player == 2 )
-    {
-      rect(974,y,25,150);
-    }
-  }
+class Paddle
+{
+
+  float x;
+  float y;
+  float w;
+  float h;
   
-  void bouce_ball()  //create bouce event when ball hit
+  Paddle(float posX, float posY, float Width, float Height)
   {
+    x = posX;
+    y = posY;
+    w = Width;
+    h = Height;
   }
-  
-  void paddle_move() //paddle movement
-  {
-    if(mousePressed)
+
+  void move()
+  { 
+    if (paddleL.bottom() > height) 
     {
-      y = mouseY;
+      paddleL.y = height - paddleL.h/2;
     }
+    if (paddleL.top() < 0) 
+    {
+      paddleL.y = paddleL.h/2;
+    }
+    if (paddleR.bottom() > height) 
+    {
+      paddleR.y = height - paddleR.h/2;
+    }
+    if (paddleR.top() < 0) 
+    {
+      paddleR.y = paddleR.h/2;
+    }
+   }
+  
+  void display()
+  {
+    rect(x-w/2,y-h/2,w,h);
+  } 
+  
+  float left()
+  {
+    return x-w/2;
+  }
+  float right()
+  {
+    return x+w/2;
+  }
+  float top()
+  {
+    return y-h/2;
+  }
+  float bottom()
+  {
+    return y+h/2;
   }
 }
 
@@ -102,5 +144,4 @@ class Ponggame
   void update() //update score point
   {
   }
-  
 }

@@ -1,3 +1,9 @@
+commit e4d1c55ea92c94630cf70c4692ad8d4be715119d
+Author: Pannawat Kingkaew <s6201012620163@email.kmutnb.ac.th>
+Date:   Tue Sep 22 15:50:31 2020 +0700
+
+    bouce ball& pressed move padle
+
 commit 976f97e8e463daf23ba355b0ce534ce9aa3839f2
 Author: Pannawat Kingkaew <s6201012620163@email.kmutnb.ac.th>
 Date:   Tue Sep 22 14:47:25 2020 +0700
