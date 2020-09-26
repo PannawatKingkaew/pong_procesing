@@ -1,4 +1,4 @@
-Ponggame g = new Ponggame();
+Ponggame game;
 Ball ball; 
 Paddle paddleL;
 Paddle paddleR;
@@ -9,18 +9,20 @@ void setup()
   paddleL = new Paddle(15, height/2, 30,200);
   paddleR = new Paddle(width-15, height/2, 30,200);
   ball = new Ball(width/2, height/2, 50);
+  game = new Ponggame();
 }
 
 void draw()
 {
   background(0);
-  g.board();
+  game.board();
   ball.display(); 
   ball.move();
   paddleL.move();
   paddleL.display();
   paddleR.move();
   paddleR.display();
+  game.update();
 }
 
 void mouseDragged()
@@ -176,7 +178,6 @@ class Ball
 
 class Ponggame
 {
-  
   int player1 = 0; //score player 1
   int player2 = 0; //score player 2
   
@@ -188,11 +189,25 @@ class Ponggame
     text(player2,(width*3)/4,50);
   }
   
-  void serve() //serve ball to left or right
+  void update()
   {
-  }
-  
-  void update() //update score point
-  {
+   if (ball.right() > width) 
+   {
+    player1 = player1 + 1;
+    ball.x = width/2;
+    ball.y = height/2;
+    ball.speedX = 3;
+    ball.speedY = 3;
+    ball.i = 0 ;
+   }
+   if (ball.left() < 0) 
+   {
+    player2 = player2 + 1;
+    ball.x = width/2;
+    ball.y = height/2;
+    ball.speedX = -3;
+    ball.speedY = -3;
+    ball.i = 0 ;
+   }
   }
 }
