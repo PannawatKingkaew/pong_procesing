@@ -1,12 +1,10 @@
 Ponggame game;
 Ball ball; 
-Paddle paddleL;
 Paddle paddleR;
 
 void setup()
 {
   size(1000,500);
-  paddleL = new Paddle(15, height/2, 30,200);
   paddleR = new Paddle(width-15, height/2, 30,200);
   ball = new Ball(width/2, height/2, 50);
   game = new Ponggame();
@@ -18,8 +16,6 @@ void draw()
   game.board();
   ball.display(); 
   ball.move();
-  paddleL.move();
-  paddleL.display();
   paddleR.move();
   paddleR.display();
   game.update();
@@ -27,11 +23,7 @@ void draw()
 
 void mouseDragged()
 {
-  if(mouseX <= width/2)
-  {
-    paddleL.y = mouseY;
-  }
-  else if(mouseX >= width/2)
+  if(mouseX >= width/2)
   {
     paddleR.y = mouseY;
   }
@@ -55,14 +47,6 @@ class Paddle
 
   void move()
   { 
-    if (paddleL.bottom() > height) 
-    {
-      paddleL.y = height - paddleL.h/2;
-    }
-    if (paddleL.top() < 0) 
-    {
-      paddleL.y = paddleL.h/2;
-    }
     if (paddleR.bottom() > height) 
     {
       paddleR.y = height - paddleR.h/2;
@@ -126,14 +110,15 @@ class Ball
     {
       ball.speedY = -ball.speedY;
     }
+
+    
+    if (x - size/2 < 0)
+    {
+      ball.speedX = -ball.speedX;
+    }
     
     if(i < 9)
     {
-     if ( ball.left() < paddleL.right() && ball.y >= paddleL.top() && ball.y <= paddleL.bottom())
-     {
-      ball.speedX = -ball.speedX*(1.2);
-      i+=1;
-     }
      if ( ball.right() > paddleR.left() && ball.y >= paddleR.top() && ball.y <= paddleR.bottom()) 
      {
       ball.speedX = -ball.speedX*(1.2);
@@ -142,10 +127,6 @@ class Ball
     }
     else
     {
-     if ( ball.left() < paddleL.right() && ball.y >= paddleL.top() && ball.y <= paddleL.bottom())
-     {
-      ball.speedX = -ball.speedX;
-     }
      if ( ball.right() > paddleR.left() && ball.y >= paddleR.top() && ball.y <= paddleR.bottom()) 
      {
       ball.speedX = -ball.speedX;
@@ -178,14 +159,12 @@ class Ball
 
 class Ponggame
 {
-  int player1 = 0; //score player 1
   int player2 = 0; //score player 2
   
   void board() //create board=> score point & center rectangular
   {
     rect((width/2)-10,0,20,1000);
     textSize(40);
-    text(player1,width/4,50);
     text(player2,(width*3)/4,50);
   }
   
@@ -193,20 +172,11 @@ class Ponggame
   {
    if (ball.right() > width) 
    {
-    player1 = player1 + 1;
+    player2 = player2 + 1;
     ball.x = width/2;
     ball.y = height/2;
     ball.speedX = 3;
     ball.speedY = 3;
-    ball.i = 0 ;
-   }
-   if (ball.left() < 0) 
-   {
-    player2 = player2 + 1;
-    ball.x = width/2;
-    ball.y = height/2;
-    ball.speedX = -3;
-    ball.speedY = -3;
     ball.i = 0 ;
    }
   }
